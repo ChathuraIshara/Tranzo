@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ImageBackground,
   Image,
@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Animated,
 } from 'react-native';
+import LottieView from 'lottie-react-native';
 
 export default function HomeScreen({ navigation }) {
   const [username, setUsername] = useState('');
@@ -16,6 +17,12 @@ export default function HomeScreen({ navigation }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [messageType, setMessageType] = useState('error'); // 'error' or 'success'
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity for animation
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+
+  useEffect(() => {
+    // Simulate loading time (e.g., fetching data)
+    setTimeout(() => setIsLoading(false), 4000); // Hide the animation after 2 seconds
+  }, []);
 
   const showError = (message, type = 'error') => {
     setErrorMessage(message);
@@ -59,6 +66,19 @@ export default function HomeScreen({ navigation }) {
       navigation.navigate('card', { username });
     }, 1000);
   };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <LottieView
+          source={require('../assets/Animation - 1733223408712.json')} // Adjust the path to your lottie file
+          autoPlay
+          loop
+          style={{ width: 200, height: 200 }}
+        />
+      </View>
+    );
+  }
 
   return (
     <ImageBackground
@@ -223,7 +243,6 @@ const styles = StyleSheet.create({
   signupLink: {
     fontWeight: 'bold',
     color: '#0F3464FF',
-  
   },
   messagePopup: {
     position: 'absolute',
@@ -251,5 +270,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
 });
