@@ -15,7 +15,7 @@ export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); //error messge showing
   const [messageType, setMessageType] = useState('error'); // 'error' or 'success'
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity for animation
 
